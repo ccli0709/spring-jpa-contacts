@@ -3,13 +3,11 @@ package tw.ccli0709.contacts.service;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
@@ -67,8 +65,10 @@ public class ContactService {
 		return result;
 	}
 
-	public List<Object[]> joinTest() {
-		return tbdu01Dao.findByNativeJoin();
+	public Page<Object[]> joinTest() {
+
+		Pageable pageable = PageRequest.of(2, 20, Sort.by(Sort.Direction.ASC, "ADDRESS"));
+		return tbdu01Dao.findByNativeJoin(pageable);
 	}
 
 	public ContactModel findByUid(String uid) {
